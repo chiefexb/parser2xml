@@ -5,7 +5,7 @@ from lxml import html
 from lxml import etree
 import sys
 def get_page(url):
-    page=None
+    #page=None
     r=requests.get(url)
     if r.status_code==200:
         page=r.text
