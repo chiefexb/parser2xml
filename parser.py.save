@@ -1,0 +1,36 @@
+#!/usr/bin/python
+#coding: utf8
+import requests
+def get_page(url):
+    page=None
+    r=requests.get(url)
+    if r.status_code==200:
+        page=r.text
+    return page
+def main():
+    from lxml import html
+    page=get_page('https://www.avito.ru/cherkessk/kvartiry/3-k_kvartira_125_m_710_et._519178765')
+    titlepath = ".//*[@id='item']/div[4]/div[1]/div[2]/h1/text()"
+    pricepath=".//*[@id='item']/div[4]/div[1]/div[2]/div[2]/div[3]/div[1]/div[1]/div[2]/span/span/text()"
+    sellertypepath=".//*[@id='i_contact']/div[1]/div/text()"
+    roomspath=".//*[@id='item']/div[4]/div[1]/div[2]/div[1]/div[2]/a[5]/text()"
+    decr1path=".//*[@id='item']/div[4]/div[1]/div[2]/div[2]/div[3]/div[2]/div[1]/div[2]/text()[2]"
+    housetypepath=".//*[@id='item']/div[4]/div[1]/div[2]/div[2]/div[3]/div[2]/div[1]/div[2]/a[2]/text()"
+    decr2path=".//*[@id='desc_text']/p/text()"
+    localtypepath=".//*[@id='i_contact']/div[5]/div[1]/text()"
+    citynamepath=".//*[@id='map']/span/text()"
+    streetpath=".//*[@id='toggle_map']/span/text()"
+
+    doc = html.document_fromstring(page)
+    rooms = doc.xpath(roomspath)
+    title=doc.xpath(titlepath)
+    sellertype=doc.xpath(sellertypepath)
+    sellernamepath=".//*[@id='seller']/strong/text()"
+    price=doc.xpath(pricepath)
+    print title[0]
+    print rooms[0]
+    print "тип ",sellertype[0]
+    print price[0]
+
+if __name__ == "__main__":
+    main()
